@@ -1,4 +1,4 @@
-package com.cho.bbs;
+package com.cho.bbs.controller;
 
 import lombok.Builder;
 import org.springframework.web.bind.annotation.RequestMapping;
