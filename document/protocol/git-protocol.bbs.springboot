@@ -1,0 +1,31 @@
+# [[git branch]] Protocol
+- main
+- develop
+- release
+- feature
+- hotfix
+
+
+# Git Commit Protocol
+- commit protocol
+	- x.y.z
+		- x -> production deployment level
+		- y -> 기능 추가 level
+		- z -> 자잘한 에러, 버그 수정, 리펙토링, TDD level
+	- []
+		- document
+		- env
+		- controller
+		- model
+		- view
+		- deploy
+	- <>
+		- new
+		- update
+		- test
+		- refactor
+		- bugfix
+	- details
+		- 말로 풀어 설명
+
+
