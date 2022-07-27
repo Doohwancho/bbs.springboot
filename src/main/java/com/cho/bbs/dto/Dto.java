@@ -10,4 +10,13 @@ import lombok.Setter;
 public class Dto {
     int id;
     String name;
+
+    Dto(){
+
+    }
+
+    Dto(int id, String name){
+        this.id = id;
+        this.name = name;
+    }
 }
