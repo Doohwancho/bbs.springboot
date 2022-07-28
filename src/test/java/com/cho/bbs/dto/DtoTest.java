@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class DtoTest {
 
     @Test
-    public void 롬북_작동_여부_테스트() {
+    public void 롬복_작동_여부_테스트() {
         //given
         int id = 1;
         String name = "test";
@@ -26,7 +26,7 @@ public class DtoTest {
     }
 
     @Test
-    public void 롬북_Builder_작동여부_테스트() {
+    public void 롬복_Builder_작동여부_테스트() {
         //given
         int id = 1;
         String name = "test";
