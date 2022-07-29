@@ -2,13 +2,20 @@ package com.cho.bbs.domain.posts;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@SpringBootTest
 public class PostsRepositoryTest {
+
+    @Autowired
+    PostsRepository postsRepository;
 
     @Test
     public void 빌더_작동_여부_확인() {
@@ -41,8 +48,7 @@ public class PostsRepositoryTest {
         assertThat(post.getAuthor()).isEqualTo(author);
     }
 
-    @Autowired
-    PostsRepository postsRepository;
+
 
     @AfterAll
     public void 테스트_게시글_삭제(){
@@ -69,7 +75,6 @@ public class PostsRepositoryTest {
 
         //when
         List<Posts> postList = postsRepository.findAll();
-
 
 
         //then
