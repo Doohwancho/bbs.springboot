@@ -12,14 +12,14 @@ import javax.persistence.*;
 public class Posts {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
     String title;
     String content;
     String author;
 
     @Builder
-    public Posts(long id, String title, String content, String author){
-        this.id = id;
+    public Posts(String title, String content, String author){
         this.title = title;
         this.content = content;
         this.author = author;
