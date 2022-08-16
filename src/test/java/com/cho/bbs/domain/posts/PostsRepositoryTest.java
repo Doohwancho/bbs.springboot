@@ -1,21 +1,21 @@
 package com.cho.bbs.domain.posts;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.annotation.Order;
+import org.junit.jupiter.api.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PostsRepositoryTest {
 
     @Autowired
@@ -131,4 +131,5 @@ public class PostsRepositoryTest {
         }
         System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&");
     }
+
 }
