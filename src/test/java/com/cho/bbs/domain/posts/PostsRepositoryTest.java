@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -132,4 +133,32 @@ public class PostsRepositoryTest {
         System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&");
     }
 
+    @Order(5)
+    @Test
+    public void sort_테스트(){
+        //given
+        for(int i = 0; i < 10; i++){
+            Posts post = new Posts()
+                    .builder()
+                    .title("title "+i)
+                    .content("content "+i)
+                    .author("author: "+i)
+                    .build();
+            postsRepository.save(post);
+        }
+
+        Sort sortByIdDesc = Sort.by("id").descending();
+
+        Pageable pageable = PageRequest.of(0, 10, sortByIdDesc);
+
+        //when
+        Page<Posts> result = postsRepository.findAll(pageable);
+
+        //then
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!");
+        result.get().forEach(post -> {
+            System.out.println(post.getId());
+        });
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!");
+    }
 }
