@@ -185,8 +185,7 @@ public class PostsRepositoryTest {
         if(result.isPresent()){
             Posts resultPost = result.get();
 
-            resultPost.updateTitle("after_title");
-            resultPost.updateContent("after_content");
+            resultPost.update("after_title","after_content");
 
             postsRepository.save(resultPost);
         }
