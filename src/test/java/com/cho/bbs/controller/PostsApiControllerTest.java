@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.cho.bbs.domain.posts.Posts;
 import com.cho.bbs.domain.posts.PostsRepository;
+import com.cho.bbs.dto.PostsSaveRequestDto;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
