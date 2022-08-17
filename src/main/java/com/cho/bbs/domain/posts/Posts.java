@@ -1,5 +1,6 @@
 package com.cho.bbs.domain.posts;
 
+import com.cho.bbs.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @Getter
-public class Posts {
+public class Posts extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
