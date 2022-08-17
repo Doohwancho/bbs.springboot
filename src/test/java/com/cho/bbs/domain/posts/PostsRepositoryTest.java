@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @SpringBootTest
@@ -160,5 +161,34 @@ public class PostsRepositoryTest {
             System.out.println(post.getId());
         });
         System.out.println("!!!!!!!!!!!!!!!!!!!!!");
+    }
+
+    @Order(6)
+    @Test
+    public void update_post_테스트(){
+        //given
+        String title = "prev_title";
+        String content = "prev_content";
+        String author = "author";
+
+        Posts post = new Posts()
+                .builder()
+                .title(title)
+                .content(content)
+                .author(author)
+                .build();
+
+        postsRepository.save(post);
+        Optional<Posts> result = postsRepository.findById(0L);
+
+        //when
+        if(result.isPresent()){
+            Posts resultPost = result.get();
+
+            resultPost.updateTitle("after_title");
+            resultPost.updateContent("after_content");
+
+            postsRepository.save(resultPost);
+        }
     }
 }
