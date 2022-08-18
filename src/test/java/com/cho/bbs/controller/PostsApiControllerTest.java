@@ -50,10 +50,6 @@ public class PostsApiControllerTest {
 
     private MockMvc mvc;
 
-    @AfterAll
-    public void tearDown() throws Exception {
-        postsRepository.deleteAll();
-    }
 
     @Test
     public void Posts_등록된다() throws Exception {
@@ -76,6 +72,8 @@ public class PostsApiControllerTest {
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(title);
         assertThat(all.get(0).getContent()).isEqualTo(content);
+
+        postsRepository.deleteAll();
     }
 
 
@@ -110,6 +108,9 @@ public class PostsApiControllerTest {
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(expectedTitle);
         assertThat(all.get(0).getContent()).isEqualTo(expectedContent);
+
+
+        postsRepository.deleteAll();
     }
 
 //    @Test
