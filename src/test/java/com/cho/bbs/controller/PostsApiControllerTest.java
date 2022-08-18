@@ -3,15 +3,17 @@ package com.cho.bbs.controller;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 import com.cho.bbs.domain.posts.Posts;
 import com.cho.bbs.domain.posts.PostsRepository;
+import com.cho.bbs.dto.PostsResponseDto;
 import com.cho.bbs.dto.PostsSaveRequestDto;
 import com.cho.bbs.dto.PostsUpdateRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,11 +21,13 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.web.context.WebApplicationContext;
 
+
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.List;
 
@@ -51,6 +55,7 @@ public class PostsApiControllerTest {
     private MockMvc mvc;
 
 
+    @Order(2)
     @Test
     public void Posts_등록된다() throws Exception {
         //given
@@ -77,6 +82,7 @@ public class PostsApiControllerTest {
     }
 
 
+    @Order(3)
     @Test
     public void Posts_수정된다() throws Exception {
         //given
@@ -89,6 +95,7 @@ public class PostsApiControllerTest {
         Long updateId = savePosts.getId();
         String expectedTitle = "title2";
         String expectedContent = "content2";
+
         PostsUpdateRequestDto requestDto = PostsUpdateRequestDto.builder()
                 .title(expectedTitle)
                 .content(expectedContent)
@@ -113,29 +120,30 @@ public class PostsApiControllerTest {
         postsRepository.deleteAll();
     }
 
-//    @Test
-//    public void Posts_조회한다() throws Exception {
-//        //given
-//        String title = "hello";
-//        String content = "hello world";
-//        String author = "cho";
-//
-//        Posts post = new Posts()
-//                .builder()
-//                .title(title)
-//                .content(content)
-//                .author(author)
-//                .build();
-//
-//        postsRepository.save(post);
-//
-//        String get_url = "http://localhost:" + port + "/api/v1/posts";
-//        PostsResponseDto responseDto;
-//
-//
-//        //when & then
-//        mockMvc.perform(get("/api/v1/posts/0"))
-//                .andExpect(content().string("hello world"))
-//                .andExpect(status().is2xxSuccessful());
-//    }
+    @Order(1)
+    @Test
+    public void Posts_조회한다() throws Exception {
+        //given
+        String title = "title";
+        String content = "hello world";
+        PostsSaveRequestDto requestDto = PostsSaveRequestDto.builder()
+                .title(title)
+                .content(content)
+                .author("author")
+                .build();
+
+        String url = "http://localhost:" + port + "/api/v1/posts";
+
+        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
+
+        //when & then
+        ResultActions hello_world = mockMvc.perform(get("/api/v1/posts/1")) //게시글 번호와 @Order 순서가 맞아야 한다.
+                .andExpect(jsonPath("$.title").exists())
+                .andExpect(jsonPath("$.content").exists())
+                .andExpect(jsonPath("$.author").exists())
+                .andExpect(status().is2xxSuccessful());
+
+
+        postsRepository.deleteAll();
+    }
 }

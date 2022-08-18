@@ -1,5 +1,6 @@
 package com.cho.bbs.controller;
 
+import com.cho.bbs.dto.PostsResponseDto;
 import com.cho.bbs.dto.PostsSaveRequestDto;
 import com.cho.bbs.dto.PostsUpdateRequestDto;
 import com.cho.bbs.service.PostsService;
@@ -20,8 +21,12 @@ public class PostsApiController {
     @PutMapping("/api/v1/posts/{id}")
     public Long update(@PathVariable Long id, @RequestBody
             PostsUpdateRequestDto requestDto) {
-
         return postsService.update(id, requestDto);
+    }
+
+    @GetMapping("/api/v1/posts/{id}")
+    public PostsResponseDto findById (@PathVariable Long id) {
+        return postsService.findById(id);
     }
 
 }

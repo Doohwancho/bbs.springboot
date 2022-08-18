@@ -2,6 +2,7 @@ package com.cho.bbs.service;
 
 import com.cho.bbs.domain.posts.Posts;
 import com.cho.bbs.domain.posts.PostsRepository;
+import com.cho.bbs.dto.PostsResponseDto;
 import com.cho.bbs.dto.PostsSaveRequestDto;
 import com.cho.bbs.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -27,4 +28,10 @@ public class PostsService {
         return id;
     }
 
+    public PostsResponseDto findById (Long id) {
+        Posts entity = postsRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id="+ id));
+
+        return new PostsResponseDto(entity);
+    }
 }
