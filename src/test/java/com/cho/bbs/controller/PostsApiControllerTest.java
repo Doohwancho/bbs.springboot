@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.cho.bbs.domain.posts.Posts;
 import com.cho.bbs.domain.posts.PostsRepository;
 import com.cho.bbs.dto.PostsSaveRequestDto;
+import com.cho.bbs.dto.PostsUpdateRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
