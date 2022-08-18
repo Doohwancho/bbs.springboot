@@ -20,12 +20,19 @@ import org.springframework.http.*;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PostsApiControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
 
     @LocalServerPort
     private int port;
@@ -103,4 +110,29 @@ public class PostsApiControllerTest {
         assertThat(all.get(0).getContent()).isEqualTo(expectedContent);
     }
 
+    @Test
+    public void Posts_조회한다() throws Exception {
+        //given
+        String title = "hello";
+        String content = "hello world";
+        String author = "cho";
+
+        Posts post = new Posts()
+                .builder()
+                .title(title)
+                .content(content)
+                .author(author)
+                .build();
+
+        postsRepository.save(post);
+
+        String get_url = "http://localhost:" + port + "/api/v1/posts";
+        PostsResponseDto responseDto;
+
+
+        //when & then
+        mockMvc.perform(get("/api/v1/posts/0"))
+                .andExpect(content().string("hello world"))
+                .andExpect(status().is2xxSuccessful());
+    }
 }
