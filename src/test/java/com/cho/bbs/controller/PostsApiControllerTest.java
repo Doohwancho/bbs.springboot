@@ -12,6 +12,7 @@ import com.cho.bbs.dto.PostsSaveRequestDto;
 import com.cho.bbs.dto.PostsUpdateRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.aspectj.lang.annotation.After;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Order;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,10 @@ public class PostsApiControllerTest {
 
     private MockMvc mvc;
 
+    @AfterEach
+    public void tearDown() throws Exception {
+        postsRepository.deleteAll();
+    }
 
     @Order(2)
     @Test
@@ -78,7 +83,6 @@ public class PostsApiControllerTest {
         assertThat(all.get(0).getTitle()).isEqualTo(title);
         assertThat(all.get(0).getContent()).isEqualTo(content);
 
-        postsRepository.deleteAll();
     }
 
 
@@ -116,9 +120,8 @@ public class PostsApiControllerTest {
         assertThat(all.get(0).getTitle()).isEqualTo(expectedTitle);
         assertThat(all.get(0).getContent()).isEqualTo(expectedContent);
 
-
-        postsRepository.deleteAll();
     }
+
 
     @Order(1)
     @Test
@@ -143,7 +146,5 @@ public class PostsApiControllerTest {
                 .andExpect(jsonPath("$.author").exists())
                 .andExpect(status().is2xxSuccessful());
 
-
-        postsRepository.deleteAll();
     }
 }
