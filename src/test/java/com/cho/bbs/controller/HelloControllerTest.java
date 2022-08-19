@@ -1,6 +1,7 @@
 package com.cho.bbs.controller;
 
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,12 @@ public class HelloControllerTest {
     @Autowired
     private MockMvc mvc;
 
-    @Test
-    public void hello를_리턴한다() throws  Exception {
-        String hello = "Hello";
-
-        mvc.perform(MockMvcRequestBuilders.get("/hello"))
-                        .andExpect(MockMvcResultMatchers.status().isOk())
-                        .andExpect(MockMvcResultMatchers.content().string(hello));
-    }
+//    @Test
+//    public void hello를_리턴한다() throws  Exception {
+//        String hello = "Hello";
+//
+//        mvc.perform(MockMvcRequestBuilders.get("/hello"))
+//                        .andExpect(MockMvcResultMatchers.status().isOk())
+//                        .andExpect(MockMvcResultMatchers.content().string(hello));
+//    }
 }
