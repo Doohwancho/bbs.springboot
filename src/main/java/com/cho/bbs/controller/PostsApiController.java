@@ -5,11 +5,15 @@ import com.cho.bbs.dto.PostsSaveRequestDto;
 import com.cho.bbs.dto.PostsUpdateRequestDto;
 import com.cho.bbs.service.PostsService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
 public class PostsApiController {
+
+    private final Logger log = LoggerFactory.getLogger(PostsApiController.class);
 
     private final PostsService postsService;
 

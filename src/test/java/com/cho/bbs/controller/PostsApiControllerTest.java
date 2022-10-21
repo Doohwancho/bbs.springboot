@@ -24,6 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -58,6 +59,7 @@ public class PostsApiControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "USER") //using mockMvc. bypass 'ROLE_USER' by adding @WithMockUser(roles = "USER")
     public void Posts_등록된다() throws Exception {
         //given
         String title = "title";
@@ -71,12 +73,12 @@ public class PostsApiControllerTest {
         String url = "http://localhost:" + port + "/api/v1/posts";
 
         //when
-        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class); //using restTemplate()
+//        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class); //using restTemplate(). failed because user has 'GUEST' role, not 'USER'.
 
-//        mockMvc.perform(post(url) //using mockMvc
-//                .contentType(MediaType.APPLICATION_JSON_UTF8)
-//                .content(new ObjectMapper().writeValueAsString(requestDto)))
-//                .andExpect(status().isOk());
+        mockMvc.perform(post(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(requestDto)))
+                .andExpect(status().isOk());
 
         //then
         List<Posts> all = postsRepository.findAll();
@@ -86,7 +88,7 @@ public class PostsApiControllerTest {
 
     // 수정/조회 기능
     @Test
-    @WithMockUser(roles = "USER")
+    @WithMockUser(roles = "USER") //using mockMvc. bypass 'ROLE_USER' by adding @WithMockUser(roles = "USER")
     public void update_Posts() throws Exception{
         //given
         Posts savedPosts = postsRepository.save(Posts.builder()
@@ -110,7 +112,7 @@ public class PostsApiControllerTest {
         //when
         //ResponseEntity<Long> responseEntity = restTemplate.exchange(url, HttpMethod.PUT,requestEntity,Long.class); //restTemplate() way
         mockMvc.perform(put(url) //mockMvc way
-                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(requestDto)))
                 .andExpect(status().isOk());
 
